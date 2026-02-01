@@ -25,19 +25,19 @@
             padding: 0 20px;
         }
         
-        /* Language Button */
+        /* Language Button - FIXED POSITION */
         .language-switcher {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 20px;
-            z-index: 100;
+            z-index: 1000;
         }
         
         .lang-btn {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(37, 55, 84, 0.9);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 8px 20px;
+            padding: 10px 20px;
             border-radius: 25px;
             text-decoration: none;
             font-weight: 600;
@@ -47,18 +47,20 @@
             align-items: center;
             gap: 8px;
             backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         
         .lang-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(0, 180, 216, 0.9);
             transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 180, 216, 0.4);
         }
         
         /* Header y Logo */
         header {
             background: linear-gradient(135deg, #0d1b2a 0%, #1b3a4b 100%);
             color: white;
-            padding: 30px 0;
+            padding: 40px 0 30px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
@@ -135,7 +137,7 @@
             color: #caf0f8;
         }
         
-        /* Contador de oferta */
+        /* Countdown Section - FIXED */
         .countdown-section {
             background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
             color: white;
@@ -184,7 +186,7 @@
             font-weight: 600;
         }
         
-        /* Sección de video */
+        /* Video Section */
         .video-section {
             padding: 60px 0;
             background-color: white;
@@ -232,7 +234,7 @@
             border: none;
         }
         
-        /* Sección de Oportunidad */
+        /* Opportunity Section */
         .opportunity-section {
             padding: 60px 0;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -284,7 +286,7 @@
             line-height: 1.7;
         }
         
-        /* Sección de CTA */
+        /* Call to Action Section */
         .cta-section {
             padding: 80px 0;
             background: linear-gradient(135deg, #1b3a4b 0%, #0d1b2a 100%);
@@ -419,15 +421,13 @@
         /* Responsive */
         @media (max-width: 768px) {
             .language-switcher {
-                position: relative;
-                top: 0;
-                right: 0;
-                text-align: center;
-                margin-bottom: 15px;
+                top: 15px;
+                right: 15px;
             }
             
             .lang-btn {
-                display: inline-flex;
+                padding: 8px 15px;
+                font-size: 13px;
             }
             
             .logo-text {
@@ -481,14 +481,14 @@
     </style>
 </head>
 <body>
-    <!-- Botón de Idioma -->
+    <!-- Language Button - FIXED POSITION -->
     <div class="language-switcher">
         <a href="https://sleepmsystem.vercel.app" class="lang-btn">
             <i class="fas fa-language"></i> Español
         </a>
     </div>
     
-    <!-- Header con Logo -->
+    <!-- Header with Logo -->
     <header>
         <div class="header-pattern"></div>
         <div class="container">
@@ -507,7 +507,7 @@
         </div>
     </header>
     
-    <!-- Countdown Offer -->
+    <!-- Countdown Offer - FIXED -->
     <section class="countdown-section">
         <div class="container">
             <h2 class="countdown-title">EXCLUSIVE LAUNCH OFFER</h2>
@@ -544,8 +544,8 @@
             
             <div class="video-container">
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/zRsfxWanxaQ" 
-                            title="Sleepmsystem - The world's best mattress" 
+                    <iframe src="https://www.youtube.com/embed/U_NXs0kJuCg" 
+                            title="Sleepmsystem - Revolutionary Sleep Technology" 
                             frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowfullscreen>
@@ -553,9 +553,14 @@
                 </div>
             </div>
             
-            <p style="text-align: center; max-width: 800px; margin: 30px auto 0; font-size: 18px; color: #555;">
-                After watching the video you'll understand why this is the easiest product to sell and the most profitable system for distributors.
-            </p>
+            <div style="text-align: center; max-width: 800px; margin: 30px auto 0;">
+                <p style="font-size: 18px; color: #555; margin-bottom: 15px;">
+                    This video reveals why our mattress technology is revolutionizing the sleep industry and creating unprecedented income opportunities for distributors.
+                </p>
+                <p style="font-size: 16px; color: #666; font-style: italic;">
+                    "After watching this, you'll understand why Sleepmsystem is the #1 choice for entrepreneurs worldwide."
+                </p>
+            </div>
         </div>
     </section>
     
@@ -651,33 +656,40 @@
     </footer>
     
     <script>
-        // Countdown timer of 15 days
+        // Countdown timer of 15 days - FIXED
         function updateCountdown() {
             const now = new Date().getTime();
-            const launchDate = new Date();
-            launchDate.setDate(launchDate.getDate() + 15); // 15 days from today
+            // Set end date to 15 days from now
+            const endDate = new Date(now + (15 * 24 * 60 * 60 * 1000));
             
-            const distance = launchDate - now;
+            const distance = endDate - now;
             
+            if (distance < 0) {
+                // Countdown has ended
+                document.getElementById("days").innerHTML = "00";
+                document.getElementById("hours").innerHTML = "00";
+                document.getElementById("minutes").innerHTML = "00";
+                document.getElementById("seconds").innerHTML = "00";
+                clearInterval(countdownInterval);
+                return;
+            }
+            
+            // Calculate days, hours, minutes, seconds
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
             
-            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
-            
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                document.querySelector(".countdown-container").innerHTML = 
-                    "<div style='font-size: 28px; font-weight: bold; padding: 20px;'>OFFER ENDED!</div>";
-            }
+            // Update display
+            document.getElementById("days").textContent = days < 10 ? "0" + days : days;
+            document.getElementById("hours").textContent = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").textContent = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").textContent = seconds < 10 ? "0" + seconds : seconds;
         }
         
+        // Initialize countdown immediately
+        updateCountdown();
         const countdownInterval = setInterval(updateCountdown, 1000);
-        updateCountdown(); // Initial call
         
         // Function to open WhatsApp with personalized message
         document.getElementById('whatsapp-link').addEventListener('click', function(e) {
@@ -709,6 +721,8 @@
             });
             
             console.log('Sleepmsystem - Distributor Opportunity page loaded successfully');
+            console.log('Countdown timer initialized');
+            console.log('Language switcher button visible at top-right');
         });
     </script>
 </body>
