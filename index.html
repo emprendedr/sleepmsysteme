@@ -56,7 +56,7 @@
             box-shadow: 0 6px 15px rgba(0, 180, 216, 0.4);
         }
         
-        /* Header y Logo */
+        /* Header and Logo */
         header {
             background: linear-gradient(135deg, #0d1b2a 0%, #1b3a4b 100%);
             color: white;
@@ -186,10 +186,11 @@
             font-weight: 600;
         }
         
-        /* Video Section */
+        /* Video Section - UPDATED */
         .video-section {
             padding: 60px 0;
             background-color: white;
+            position: relative;
         }
         
         .section-title {
@@ -217,6 +218,7 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            position: relative;
         }
         
         .video-wrapper {
@@ -232,6 +234,128 @@
             width: 100%;
             height: 100%;
             border: none;
+        }
+        
+        /* Popup Modal at video end */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1b3a4b 0%, #0d1b2a 100%);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.5s ease;
+            position: relative;
+            border: 1px solid rgba(0, 180, 216, 0.3);
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #90e0ef;
+            font-size: 24px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .modal-icon {
+            font-size: 60px;
+            color: #00b4d8;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 32px;
+            color: white;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .modal-text {
+            font-size: 18px;
+            color: #caf0f8;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .modal-highlight {
+            background: rgba(0, 180, 216, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #00b4d8;
+        }
+        
+        .modal-highlight p {
+            margin: 0;
+            color: #90e0ef;
+            font-style: italic;
+        }
+        
+        .modal-btn {
+            background: linear-gradient(135deg, #25D366 0%, #1da851 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 20px;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+            margin: 20px auto 0;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.6);
         }
         
         /* Opportunity Section */
@@ -461,6 +585,24 @@
                 font-size: 28px;
             }
             
+            .modal-content {
+                padding: 30px 20px;
+                width: 95%;
+            }
+            
+            .modal-title {
+                font-size: 24px;
+            }
+            
+            .modal-text {
+                font-size: 16px;
+            }
+            
+            .modal-btn {
+                padding: 15px 30px;
+                font-size: 18px;
+            }
+            
             .cta-title {
                 font-size: 30px;
             }
@@ -507,7 +649,7 @@
         </div>
     </header>
     
-    <!-- Countdown Offer - FIXED AND WORKING -->
+    <!-- Countdown Offer - WORKING -->
     <section class="countdown-section">
         <div class="container">
             <h2 class="countdown-title">EXCLUSIVE LAUNCH OFFER</h2>
@@ -544,25 +686,52 @@
             
             <div class="video-container">
                 <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/U_NXs0kJuCg" 
-                            title="Sleepmsystem - Revolutionary Sleep Technology" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
+                    <iframe 
+                        id="video-player"
+                        src="https://www.youtube.com/embed/U_NXs0kJuCg?enablejsapi=1&rel=0&modestbranding=1&controls=1&showinfo=0" 
+                        title="Sleepmsystem - Revolutionary Sleep Technology" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
                     </iframe>
                 </div>
             </div>
             
-            <div style="text-align: center; max-width: 800px; margin: 30px auto 0;">
-                <p style="font-size: 18px; color: #555; margin-bottom: 15px;">
-                    This video reveals why our mattress technology is revolutionizing the sleep industry and creating unprecedented income opportunities for distributors.
-                </p>
-                <p style="font-size: 16px; color: #666; font-style: italic;">
-                    "After watching this, you'll understand why Sleepmsystem is the #1 choice for entrepreneurs worldwide."
-                </p>
-            </div>
+            <p style="text-align: center; max-width: 800px; margin: 30px auto 0; font-size: 18px; color: #555;">
+                After watching the video you'll understand why this is the easiest product to sell and the most profitable system for distributors.
+            </p>
         </div>
     </section>
+    
+    <!-- Popup Modal that appears at video end -->
+    <div class="modal-overlay" id="video-end-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <div class="modal-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <h3 class="modal-title">Now is the Perfect Time to Start!</h3>
+            <p class="modal-text">
+                You've completed the informative video. Now you know the system that is changing lives and generating extraordinary income.
+            </p>
+            
+            <div class="modal-highlight">
+                <p>"Don't wait for opportunities to come, create the opportunities yourself. Your future as a Sleepmsystem distributor starts now."</p>
+            </div>
+            
+            <p class="modal-text">
+                Schedule a call with one of our specialized agents to start your journey towards $10K monthly.
+            </p>
+            
+            <button class="modal-btn" id="modal-whatsapp-btn">
+                <i class="fab fa-whatsapp"></i> Start Now
+            </button>
+            
+            <p style="color: #90e0ef; margin-top: 20px; font-size: 14px;">
+                <i class="fas fa-clock"></i> Guaranteed response in less than 24 hours
+            </p>
+        </div>
+    </div>
     
     <!-- Opportunity Section -->
     <section class="opportunity-section">
@@ -613,7 +782,7 @@
                     distributing the world's most advanced mattress.
                 </p>
                 
-                <a href="https://wa.me/+13232850508?text=I%20saw%20the%20advertisement%20for%20the%20world's%20best%20mattress%20and%20I%20want%20to%20become%20a%20distributor.%20My%20name%20is:" 
+                <a href="https://wa.me/+13232850508" 
                    class="whatsapp-btn" 
                    target="_blank" 
                    id="whatsapp-link">
@@ -656,9 +825,9 @@
     </footer>
     
     <script>
-        // SIMPLE WORKING COUNTDOWN TIMER
+        // WORKING COUNTDOWN - 15 days exact
         function startCountdown() {
-            // Set the end date to 15 days from now
+            // Set end date: 15 days from now
             const endDate = new Date();
             endDate.setDate(endDate.getDate() + 15);
             endDate.setHours(23, 59, 59, 999); // Set to end of day
@@ -683,7 +852,7 @@
                 const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
                 
-                // Display the values
+                // Display values
                 document.getElementById("days").textContent = days < 10 ? "0" + days : days;
                 document.getElementById("hours").textContent = hours < 10 ? "0" + hours : hours;
                 document.getElementById("minutes").textContent = minutes < 10 ? "0" + minutes : minutes;
@@ -695,26 +864,101 @@
             const timerInterval = setInterval(updateTimer, 1000);
         }
         
-        // Start countdown when page loads
-        document.addEventListener('DOMContentLoaded', startCountdown);
+        // VIDEO CONTROL - POPUP AT END
+        let player;
+        let videoEnded = false;
         
-        // Function to open WhatsApp with personalized message
-        document.getElementById('whatsapp-link').addEventListener('click', function(e) {
-            // We could ask for the name before redirecting
-            const userName = prompt("Please enter your full name to register as a distributor:");
-            if(userName && userName.trim() !== "") {
-                const whatsappMsg = `I saw the advertisement for the world's best mattress and I want to become a distributor. My name is: ${userName.trim()}`;
-                const encodedMsg = encodeURIComponent(whatsappMsg);
-                this.href = `https://wa.me/+13232850508?text=${encodedMsg}`;
-                console.log('Redirecting to WhatsApp for distributor registration...');
-            } else if (userName !== null) {
-                e.preventDefault();
-                alert("Please enter your name to register as a distributor.");
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('video-player', {
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+        
+        function onPlayerReady(event) {
+            console.log('Video ready to play');
+        }
+        
+        function onPlayerStateChange(event) {
+            // When video ends (state = 0)
+            if (event.data === YT.PlayerState.ENDED && !videoEnded) {
+                videoEnded = true;
+                showPopup();
             }
-        });
+            
+            // Reset flag if video restarts
+            if (event.data === YT.PlayerState.PLAYING) {
+                videoEnded = false;
+            }
+        }
         
-        // Fade-in effect for cards
+        function showPopup() {
+            const modal = document.getElementById('video-end-modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scroll
+            console.log('Popup shown - Video ended');
+        }
+        
+        function closePopup() {
+            const modal = document.getElementById('video-end-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scroll
+        }
+        
+        // IMPROVED WHATSAPP FUNCTION WITH NEW MESSAGE
+        function openWhatsAppWithPersonalizedMessage() {
+            const userName = prompt("Please enter your full name to schedule an appointment and an agent will be with you as soon as possible. Thank you very much.");
+            
+            if (userName && userName.trim() !== "") {
+                const cleanName = userName.trim();
+                const whatsappMessage = `Hello, I watched the Sleepmsystem presentation and I'm interested in becoming a distributor. My name is: ${cleanName}. Please schedule a call for me to get started.`;
+                const encodedMessage = encodeURIComponent(whatsappMessage);
+                const whatsappURL = `https://wa.me/+13232850508?text=${encodedMessage}`;
+                
+                // Open WhatsApp in new tab
+                window.open(whatsappURL, '_blank');
+                console.log('WhatsApp opened with personalized message');
+            } else if (userName !== null) {
+                alert("Please enter your full name so an agent can contact you.");
+            }
+        }
+        
+        // Event Listeners
         document.addEventListener('DOMContentLoaded', function() {
+            // Start countdown
+            startCountdown();
+            
+            // Load YouTube API
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            
+            // Close modal with X button
+            document.getElementById('modal-close').addEventListener('click', closePopup);
+            
+            // Close modal by clicking outside
+            document.getElementById('video-end-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePopup();
+                }
+            });
+            
+            // "Start Now" button in modal
+            document.getElementById('modal-whatsapp-btn').addEventListener('click', function() {
+                closePopup();
+                openWhatsAppWithPersonalizedMessage();
+            });
+            
+            // Main WhatsApp button
+            document.getElementById('whatsapp-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                openWhatsAppWithPersonalizedMessage();
+            });
+            
+            // Fade-in effect for cards
             const cards = document.querySelectorAll('.opportunity-card');
             cards.forEach((card, index) => {
                 card.style.opacity = '0';
@@ -727,9 +971,16 @@
                 }, 300 + (index * 200));
             });
             
-            console.log('Sleepmsystem - Distributor Opportunity page loaded successfully');
-            console.log('Countdown timer started');
-            console.log('Language switcher button visible at top-right');
+            console.log('Sleepmsystem page loaded successfully');
+            console.log('Video end popup system activated');
+            console.log('WhatsApp message updated with new wording');
+        });
+        
+        // Escape key to close modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePopup();
+            }
         });
     </script>
 </body>
